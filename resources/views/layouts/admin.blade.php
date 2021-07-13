@@ -18,10 +18,11 @@
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+    @yield('style')
 </head>
 <body>
     <div id="app">
-        <x-navbar></x-navbar>
+        <x-navbar-admin></x-navbar-admin>
 
         <main class="py-4">
             @yield('content')
@@ -34,5 +35,7 @@
             {{ date('Y', time()) }} &copy; PT Majoo Teknologi Indonesia
         </p>
     </footer>
+    
+@yield('script')
 </body>
 </html>

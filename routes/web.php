@@ -1,6 +1,8 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use \App\Http\Controllers\Admin\{DashboardController, ProductController};
+use \App\Http\Controllers\HomeController;
 
 /*
 |--------------------------------------------------------------------------
@@ -19,4 +21,18 @@ Route::get('/', function () {
 
 Auth::routes();
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::get('/home', [HomeController::class, 'index'])->name('home');
+Route::get('/products/detail/{id}', [HomeController::class, 'detail'])->name('home.detail');
+
+Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => 'auth'], function() {
+	Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+
+	Route::group(['prefix' => 'products', 'as' => 'products.'], function() {
+		Route::get('', [ProductController::class, 'index'])->name('index');
+		Route::get('/create-new-product', [ProductController::class, 'create'])->name('create');
+		Route::post('/create-new-product', [ProductController::class, 'store'])->name('store');
+		Route::get('/edit-product/{id}', [ProductController::class, 'edit'])->name('edit');
+		Route::put('/edit-product/{id}', [ProductController::class, 'update'])->name('update');
+		Route::delete('/delete-product/{id}', [ProductController::class, 'destroy'])->name('destroy');
+	});
+});
