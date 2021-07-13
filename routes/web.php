@@ -24,8 +24,9 @@ Auth::routes();
 Route::get('/home', [HomeController::class, 'index'])->name('home');
 Route::get('/products/detail/{id}', [HomeController::class, 'detail'])->name('home.detail');
 Route::post('/buy-item/{id}', [HomeController::class, 'buyItem'])->middleware('auth')->name('frontend.buyitem');
+Route::get('/history', [HomeController::class, 'history'])->middleware('auth')->name('frontend.history');
 
-Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => 'auth'], function() {
+Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => ['auth', 'cekrole:admin']], function() {
 
 	Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 	Route::group(['prefix' => 'products', 'as' => 'products.'], function() {
@@ -39,7 +40,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => 'auth'], fu
 
 	Route::group(['prefix' => 'transactions', 'as' => 'transactions.'], function() {
 		Route::get('', [TransactionController::class, 'index'])->name('index');
-		Route::get('/log-transaction', [TransactionController::class, 'logTransaction'])->name('log');
+		Route::get('/log', [TransactionController::class, 'logTransaction'])->name('log');
 		Route::put('/{id}/acc-transaction', [TransactionController::class, 'accTransaction'])->name('acctransaction');
 	});
 });

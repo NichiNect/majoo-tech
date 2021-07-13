@@ -44,6 +44,12 @@ class HomeController extends Controller
     	]);
 
     	return redirect()->back()->with('success', 'Buy Item Successfully. Please Wait For Accept by Admin.');
+    }
 
+    public function history()
+    {
+        $transactions = Transaction::with('user', 'product')->where('user_id', auth()->user()->id)->paginate(5);
+
+        return view('frontend.history', compact('transactions'));
     }
 }

@@ -11,13 +11,15 @@
                     <!-- Left Side Of Navbar -->
                     <ul class="navbar-nav mr-auto">
                         <li class="nav-item">
-                            <a class="nav-link" href="{{ route('admin.products.index') }}">Products</a>
+                            <a class="nav-link @if(Request::segment(2) == 'dashboard') active @endif" href="{{ route('admin.dashboard') }}">Dashboard</a>
+                        </li><li class="nav-item">
+                            <a class="nav-link @if(Request::segment(2) == 'products') active @endif" href="{{ route('admin.products.index') }}">Products</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="{{ route('admin.transactions.index') }}">Transaction</a>
+                            <a class="nav-link @if(Request::segment(2) == 'transactions' && Request::segment(3) != 'log') active @endif" href="{{ route('admin.transactions.index') }}">Transaction</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="{{ route('admin.transactions.log') }}">Log Transaction</a>
+                            <a class="nav-link @if(Request::segment(2) == 'transactions' && Request::segment(3) == 'log') active @endif" href="{{ route('admin.transactions.log') }}">Log Transaction</a>
                         </li>
                     </ul>
 
