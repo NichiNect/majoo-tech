@@ -2,7 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use \App\Http\Controllers\Admin\{DashboardController, ProductController, TransactionController};
-use \App\Http\Controllers\HomeController;
+use \App\Http\Controllers\{HomeController, UserManagement};
 
 /*
 |--------------------------------------------------------------------------
@@ -23,8 +23,15 @@ Auth::routes();
 
 Route::get('/home', [HomeController::class, 'index'])->name('home');
 Route::get('/products/detail/{id}', [HomeController::class, 'detail'])->name('home.detail');
-Route::post('/buy-item/{id}', [HomeController::class, 'buyItem'])->middleware('auth')->name('frontend.buyitem');
-Route::get('/history', [HomeController::class, 'history'])->middleware('auth')->name('frontend.history');
+
+Route::middleware('auth')->group(function() {
+	Route::post('/buy-item/{id}', [HomeController::class, 'buyItem'])->name('frontend.buyitem');
+	Route::get('/history', [HomeController::class, 'history'])->name('frontend.history');
+	Route::get('/edit-profile', [UserManagement::class, 'editProfile'])->name('frontend.editprofile');
+	Route::put('/edit-profile', [UserManagement::class, 'updateProfile'])->name('frontend.updateprofile');
+	Route::get('/change-password', [UserManagement::class, 'editPassword'])->name('frontend.editpassword');
+	Route::put('/change-password', [UserManagement::class, 'updatePassword'])->name('frontend.updatepassword');
+});
 
 Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => ['auth', 'cekrole:admin']], function() {
 
