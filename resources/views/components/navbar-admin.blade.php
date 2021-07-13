@@ -13,6 +13,12 @@
                         <li class="nav-item">
                             <a class="nav-link" href="{{ route('admin.products.index') }}">Products</a>
                         </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ route('admin.transactions.index') }}">Transaction</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ route('admin.transactions.log') }}">Log Transaction</a>
+                        </li>
                     </ul>
 
                     <!-- Right Side Of Navbar -->

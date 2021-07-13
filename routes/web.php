@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use \App\Http\Controllers\Admin\{DashboardController, ProductController};
+use \App\Http\Controllers\Admin\{DashboardController, ProductController, TransactionController};
 use \App\Http\Controllers\HomeController;
 
 /*
@@ -23,10 +23,11 @@ Auth::routes();
 
 Route::get('/home', [HomeController::class, 'index'])->name('home');
 Route::get('/products/detail/{id}', [HomeController::class, 'detail'])->name('home.detail');
+Route::post('/buy-item/{id}', [HomeController::class, 'buyItem'])->middleware('auth')->name('frontend.buyitem');
 
 Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => 'auth'], function() {
-	Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 
+	Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 	Route::group(['prefix' => 'products', 'as' => 'products.'], function() {
 		Route::get('', [ProductController::class, 'index'])->name('index');
 		Route::get('/create-new-product', [ProductController::class, 'create'])->name('create');
@@ -34,5 +35,11 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => 'auth'], fu
 		Route::get('/edit-product/{id}', [ProductController::class, 'edit'])->name('edit');
 		Route::put('/edit-product/{id}', [ProductController::class, 'update'])->name('update');
 		Route::delete('/delete-product/{id}', [ProductController::class, 'destroy'])->name('destroy');
+	});
+
+	Route::group(['prefix' => 'transactions', 'as' => 'transactions.'], function() {
+		Route::get('', [TransactionController::class, 'index'])->name('index');
+		Route::get('/log-transaction', [TransactionController::class, 'logTransaction'])->name('log');
+		Route::put('/{id}/acc-transaction', [TransactionController::class, 'accTransaction'])->name('acctransaction');
 	});
 });

@@ -16,7 +16,7 @@
                     <div class="p-4 text-center">
                         <h5><sup>Rp.</sup> {{ number_format($product->price) }}</h5>
                         <p class="text-left">{{ Str::limit($product->description, 150) }}</p>
-                        <button class="btn btn-outline-dark">Buy</button>
+                        <a href="{{ route('home.detail', $product->id) }}" class="btn btn-outline-dark">Buy</a>
                     </div>
                 </div>
             </div>

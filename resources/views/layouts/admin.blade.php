@@ -28,13 +28,6 @@
             @yield('content')
         </main>
     </div>
-
-    <footer style="position: absolute; bottom: 0px; width: 100%;">
-        <hr>
-        <p class="text-center">
-            {{ date('Y', time()) }} &copy; PT Majoo Teknologi Indonesia
-        </p>
-    </footer>
     
 @yield('script')
 </body>
